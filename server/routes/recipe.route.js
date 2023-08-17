@@ -16,6 +16,8 @@ router.get('/submit-recipe', recipeController.submitRecipe);
 router.post('/submit-recipe', recipeController.submitRecipePost);
 router.get('/about', recipeController.aboutUs);
 router.get('/contact', recipeController.contactUs);
+router.post('/contact', recipeController.contactUsPost);
+
 
 
 //router.post('/recipe/_id', recipeController.updateRecipe);
