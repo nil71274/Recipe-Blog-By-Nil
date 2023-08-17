@@ -1,13 +1,48 @@
-<div class="w3-padding-32 w3-content w3-text-grey" id="contact" style="margin-bottom:64px">
-    <h2>Contact Me</h2>
-    <hr class="w3-opacity">
-
-    <div class="text-center">
-        <strong>Location: <p style="color: grey;"> Nashik, India</p></strong>
-        <br>
-        <strong>Phone: <p style="color: grey;"> +91 9595660706</p></strong>
-        <br>
-        <strong>Email: <p style="color: grey;">  nileshpawar290402@gmail.com</p></strong>
+<div class="px-5 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">Contact Me</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead">Share your experience with me!</p>
     </div>
+</div>
+
+<div class="row justify-content-center">
+
+    <% if(infoSubmitObj != '') { %>
+        <div class="col-8 alert alert-success" role="alert">
+            <%= infoSubmitObj %>
+        </div>
+    <% } %>
     
-  </div>
+    <% if(infoErrorsObj != '') { %>
+        <div class="col-8 alert alert-danger" role="alert">
+            <%= infoErrorsObj[0].message %>
+        </div>
+    <% } %>
+        
+    <div class="col-8">
+        <form action="/contact" method="post" enctype="multipart/form-data">
+            <div class="row-g-3">
+                <div class="col-12">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" name="name" id="name" class="form-control" required>
+                </div>
+        
+                <div class="col-12">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" required>
+                </div>
+                
+                <div class="col-12">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea type="text" name="message" class="form-control" cols="30" rows="4" required></textarea>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="col-12">
+                <button class="btn btn-danger" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
