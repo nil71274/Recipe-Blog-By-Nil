@@ -1,6 +1,7 @@
 require("../models/database.model");
 const Category = require("../models/Category.model");
 const Recipe = require("../models/Recipe.model")
+const Contact = require("../models/Contact.model");
 
 
 
@@ -166,72 +167,25 @@ exports.aboutUs = function(req, res){
 }
 
 exports.contactUs = function(req, res){
-    try {
-        res.render('contact', {title: "Cooking Blog - Contact Us"});
-    } catch (error) {
-        res.status(500).send({message: error.message || "Error Occured"});
-    }
+    const infoErrorsObj = req.flash('infoErrors');
+    const infoSubmitObj = req.flash('infoSubmit');
+    res.render('contact', {title: "Cooking Blog - Contact Us",  infoErrorsObj, infoSubmitObj });
 }
 
+exports.contactUsPost = async function(req, res){
+    try {
+        const contact = Contact({
+            name: req.body.name,
+            email: req.body.email,
+            message: req.body.message
+            
+        });
+        await contact.save();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// async function insertDymmyRecipeData(){
-//   try {
-//     await Recipe.insertMany([
-//       { 
-//         "name": "Recipe Name Goes Here",
-//         "description": `Recipe Description Goes Here`,
-//         "email": "recipeemail@raddy.co.uk",
-//         "ingredients": [
-//           "1 level teaspoon baking powder",
-//           "1 level teaspoon cayenne pepper",
-//           "1 level teaspoon hot smoked paprika",
-//         ],
-//         "category": "American", 
-//         "image": "southern-friend-chicken.jpg"
-//       },
-//       { 
-//         "name": "Recipe Name Goes Here",
-//         "description": `Recipe Description Goes Here`,
-//         "email": "recipeemail@raddy.co.uk",
-//         "ingredients": [
-//           "1 level teaspoon baking powder",
-//           "1 level teaspoon cayenne pepper",
-//           "1 level teaspoon hot smoked paprika",
-//         ],
-//         "category": "American", 
-//         "image": "southern-friend-chicken.jpg"
-//       },
-//     ]);
-//   } catch (error) {
-//     console.log('err', + error)
-//   }
-// }
-
-// insertDymmyRecipeData();
+        req.flash('infoSubmit', "Your response is submitted");
+        res.redirect('/contact');
+    } catch (error) {
+        req.flash('infoErrors', error);
+        res.redirect('/contact');
+    }
+}
